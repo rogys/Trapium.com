@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="pt-br">
+    <head>
+        <meta name="robots" content="index, follow">
+        <link rel="icon" href="favicon.png" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#000000">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <title>Página</title>
+        <meta charset="UTF-8">
+        <meta name="generator" content="Visual Studio Code">
+        <meta name="author" content="Ygor Scofano">
+        <meta name="date" content="">
+        <link rel="stylesheet" href="/stylesheet/style.css">
+    </head>
+    <body>
+        <main class="main">
+            <form class="form" action="/submit" method="POST" enctype="multipart/form-data">
+                <h1 class="form_title">Enviar conteúdo</h1>
+                <div class="form_group">
+                    <label for="title" class="form_label">Título</label>
+                    <input type="text" id="title" name="title" class="form_input" required>
+                    <label for="content" class="form_label">Conteúdo</label>
+                    <textarea id="content" name="content" class="form_textarea" required></textarea>
+                    <label for="image">Imagem</label>
+                    <input type="file" id="image" name="image" accept="image/*" class="form_input" required>
+                    <button type="submit">Enviar</button>
+                </div>
+            </form>
+        </main>
+    </body>
+    <script src="/script/script.js"></script>
+</html>

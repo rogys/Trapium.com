@@ -18,3 +18,26 @@ if (newsId) {
 } else {
     document.body.innerHTML = `<h1>ID da notícia não encontrado na URL</h1>`;
 }
+
+app.post('/submit', upload.array("imagens", 5), (req, res) => {
+    const title = req.body.title;
+    const content = req.body.content;
+
+    // Verifica se os arquivos foram enviados
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ error: "Nenhuma imagem enviada!" });
+    }
+
+    // Obtém os nomes das imagens salvas
+    const imagePaths = req.files.map(file => file.filename).join(',');
+
+    // Insere os dados no banco de dados
+    const querySend = 'INSERT INTO news (title, content, images) VALUES (?, ?, ?)';
+    data.online.query(querySend, [title, content, imagePaths], (error, results) => {
+        if (error) {
+            console.log('Erro ao enviar os dados:', error);
+            return res.status(500).json({ error: "Erro ao salvar no banco de dados" });
+        }
+        res.redirect('/');
+    });
+});

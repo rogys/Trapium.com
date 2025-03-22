@@ -9,6 +9,7 @@ fetch('/api/index')
                 <a href="/news/${dataContent.id}" class="news_link">
                     <article class="news_content">
                             <div class="news_image">
+                                <img src="/uploads/${dataContent.image}" alt="${dataContent.title}" class="news_img">
                             </div>
                             <h2>${dataContent.title}</h2>
                             <p>${dataContent.content}</p>
