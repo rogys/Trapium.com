@@ -11,9 +11,13 @@ fetch('/api/index')
                             <div class="news_image">
                                 <img src="/uploads/${dataContent.image}" alt="${dataContent.title}" class="news_img">
                             </div>
-                            <h2>${dataContent.title}</h2>
-                            <p>${dataContent.content}</p>
-                            <span class="news_date">${dataContent.created_at}</span>
+                            <div class="news_info">
+                                <div class="news_holder">
+                                    <h2 class="news_title">${dataContent.title}</h2>
+                                    <p class="news_content">${dataContent.content}</p>
+                                </div>
+                                <span class="news_date">${dataContent.created_at}</span>
+                            </div>
                     </article>
                 </a>
         `;
