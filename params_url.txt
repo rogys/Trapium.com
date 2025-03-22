@@ -1,0 +1,20 @@
+// Captura o ID da URL
+const urlParams = new URLSearchParams(window.location.search);
+const newsId = urlParams.get('id');
+
+if (newsId) {
+    fetch(`/api/news/${newsId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.body.innerHTML = `<h1>Notícia não encontrada</h1>`;
+            } else {
+                document.querySelector('.news-title').innerText = data.title;
+                document.querySelector('.news-content').innerText = data.content;
+                document.querySelector('.news-date').innerText = `Publicado em: ${data.created_at}`;
+            }
+        })
+        .catch(error => console.error("Erro ao buscar notícia:", error));
+} else {
+    document.body.innerHTML = `<h1>ID da notícia não encontrado na URL</h1>`;
+}

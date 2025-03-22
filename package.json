@@ -1,0 +1,16 @@
+{
+  "name": "trapium.com",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Ygor Scofano",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mysql2": "^3.14.0"
+  }
+}
