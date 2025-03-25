@@ -7,7 +7,7 @@
         <meta name="theme-color" content="#000000">
         <meta name="description" content="">
         <meta name="keywords" content="">
-        <title>Página</title>
+        <title>Trapium.com</title>
         <meta charset="UTF-8">
         <meta name="generator" content="Visual Studio Code">
         <meta name="author" content="Ygor Scofano">
@@ -15,16 +15,25 @@
         <link rel="stylesheet" href="/stylesheet/style.css">
     </head>
     <body>
+        <header class="header">
+            <a href="/"><h1>Trapium.com</h1></a>
+        </header>
         <main class="main">
             <form class="form" action="/submit" method="POST" enctype="multipart/form-data">
-                <h1 class="form_title">Enviar conteúdo</h1>
                 <div class="form_group">
-                    <label for="title" class="form_label">Título</label>
+                    <h1 class="form_title">Novo conteúdo:</h1>
+                    <label for="title" class="form_label">Título do artigo:</label>
                     <input type="text" id="title" name="title" class="form_input" required>
-                    <label for="content" class="form_label">Conteúdo</label>
-                    <textarea id="content" name="content" class="form_textarea" required></textarea>
-                    <label for="image">Imagem</label>
+                    <label for="content" class="form_label">Descrição:</label>
+                    <input type="text" id="content" name="content" class="form_textarea" required></textarea>
+                    <label class="form_label" for="image">Miniatura do artigo:</label>
                     <input type="file" id="image" name="image" accept="image/*" class="form_input" required>
+                    <label class="form_label" for="image">Imagem principal do artigo:</label>
+                    <input type="file" id="image" name="image" accept="image/*" class="form_input" required>
+                    <label for="main_title" class="form_label">Título principal do artigo:</label>
+                    <input type="text" name="main_title" id="main_title" required>
+                    <label for="main_content" class="form_label">Conteúdo principal do artigo:</label>
+                    <textarea name="main_content" id="main_content" required></textarea>
                     <button type="submit">Enviar</button>
                 </div>
             </form>

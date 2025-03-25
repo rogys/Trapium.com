@@ -31,6 +31,19 @@ app.get('/', (req, res) => {
 app.get('/submit', (req, res) => {
     res.sendFile(__dirname + '/public/admin' + '/painel' + '/send_content.html');
 });
+app.get('/news/:id', (req, res) => {
+    res.sendFile(__dirname + '/public' + '/news.html');
+});
+app.get('/api/news/:id', (req, res) => {
+    const id = req.params.id;
+    const query = 'SELECT * FROM news WHERE id = ?';
+    data.online.query(query, [id], (error, results) => {
+        if (error) {
+            console.log('Error fetching the data');
+        };
+        res.json(results);
+    });
+});
 // app.post('/submit', (req, res) => {
 //     const title = req.body.title;
 //     const content = req.body.content;
@@ -42,18 +55,20 @@ app.get('/submit', (req, res) => {
 //         res.redirect('/');
 //     });
 // });
-app.post('/submit', upload.single("image"), (req, res) => {
+app.post('/submit', upload.array("image", "main_image"), (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
+    const main_title = req.body.main_title;
+    const main_content = req.body.main_content;
 
     // Verifica se os arquivos foram enviados
-    if (!req.file) {
+    if (!req.files) {
         return res.status(400).json({ error: "Nenhuma imagem enviada!" });
     }
 
     // Insere os dados no banco de dados
-    const querySend = 'INSERT INTO news (title, content, image) VALUES (?, ?, ?)';
-    data.online.query(querySend, [title, content, req.file.filename], (error, results) => {
+    const querySend = 'INSERT INTO news (title, content, image, main_image, main_title, main_content) VALUES (?, ?, ?, ?, ?, ?)';
+    data.online.query(querySend, [title, content, req.files[0].filename, req.files[1].filename, main_title, main_content], (error, results) => {
         if (error) {
             console.log('Erro ao enviar os dados:', error);
             return res.status(500).json({ error: "Erro ao salvar no banco de dados" });
@@ -62,6 +77,7 @@ app.post('/submit', upload.single("image"), (req, res) => {
         console.log('Dados enviados com sucesso!');
     });
 });
+
 app.listen(3000, (error) => {
     if (error) {
         console.log('Error running the server');
