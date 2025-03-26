@@ -32,13 +32,13 @@ if (DocumentElements.gridNews) {
     .then(response => response.json()).then(data => {
         const newsContent = data[0];
         DocumentElements.newsSection.innerHTML = `
-            <article class="news_content">
+            <article class="news_article">
                 <div class="news_image">
                     <img src="/uploads/${newsContent.main_image}" alt="${newsContent.main_title}" class="article_news_img">
                 </div>
                 <div class="news_info">
                     <div class="news_holder">
-                        <h2 class="news_title">${newsContent.main_title}</h2>
+                        <h2 class="news_article_title">${newsContent.main_title}</h2>
                         <p class="news_content_info">${newsContent.main_content}</p>
                     </div>
                     <span class="news_date">${newsContent.created_at}</span>

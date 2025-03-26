@@ -112,6 +112,13 @@ max-width: 275px;
 height: 275px;
 object-fit: cover;
 }
+.news_content_info {
+line-height: 1.5;
+}
+.news_article_title {
+margin: 1rem 0;
+font-size: 1.5em;
+}
 .news_title {
 font-size: 2em;
 line-height: 1.2;
@@ -133,4 +140,9 @@ padding: 0 1rem;
 }
 .news_image {
 display: block;
+}
+.artcle_news_image {
+max-width: 100%;
+height: auto;
+display: inline;
 }
