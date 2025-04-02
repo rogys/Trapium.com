@@ -52,7 +52,7 @@ margin-bottom: 2rem;
 }
 .news_grid {
 display: grid;
-grid-template-columns: 550px 550px;
+grid-template-columns: 550px 550px 550px;
 justify-content: center;
 gap: 1rem;
 }
