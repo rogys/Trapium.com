@@ -41,6 +41,9 @@ if (DocumentElements.gridNews) {
                         <h2 class="news_article_title">${newsContent.main_title}</h2>
                         <p class="news_content_info">${newsContent.main_content}</p>
                     </div>
+                    <div class="slide_show">
+                        
+                    </div>
                     <span class="news_date">${newsContent.created_at}</span>
                 </div>
             </article>

@@ -23,7 +23,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ 
     storage: storage,
     fileFilter: fileFilter,
-    limits: { fileSize: 10 * 1024 * 1024 } // Limite de 5MB
+    limits: { fileSize: 10 * 1024 * 1024 } // Limite de 10MB
 });
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public' + '/index.html');
@@ -44,38 +44,41 @@ app.get('/api/news/:id', (req, res) => {
         res.json(results);
     });
 });
-// app.post('/submit', (req, res) => {
-//     const title = req.body.title;
-//     const content = req.body.content;
-//     const querySend = 'INSERT INTO news (title, content) VALUES (?, ?)';
-//     data.online.query(querySend, [title, content], (error, results) => {
-//         if (error) {
-//             console.log('Error sending the data');
-//         };
-//         res.redirect('/');
-//     });
-// });
-app.post('/submit', upload.array("image", "main_image"), (req, res) => {
+app.post('/submit', upload.fields([
+    { name: 'image', maxCount: 1 }, // Campo para a imagem principal (1 arquivo)
+    { name: 'main_image', maxCount: 1 }, // Campo para a imagem adicional (1 arquivo)
+    { name: 'secondarys_image', maxCount: 5 } // Campo para imagens secundárias (até 5 arquivos)
+]), (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
     const main_title = req.body.main_title;
     const main_content = req.body.main_content;
 
-    // Verifica se os arquivos foram enviados
-    if (!req.files) {
-        return res.status(400).json({ error: "Nenhuma imagem enviada!" });
+    // Verifica se os arquivos obrigatórios foram enviados
+    if (!req.files || !req.files["image"] || !req.files["main_image"] || !req.files["secondarys_image"] || req.files["secondarys_image"].length < 3) {
+        return res.status(400).json({ error: "Selecione uma miniatura, uma imagem principal e pelo menos 3 imagens secundárias (máximo 5)!" });
     }
 
-    // Insere os dados no banco de dados
-    const querySend = 'INSERT INTO news (title, content, image, main_image, main_title, main_content) VALUES (?, ?, ?, ?, ?, ?)';
-    data.online.query(querySend, [title, content, req.files[0].filename, req.files[1].filename, main_title, main_content], (error, results) => {
-        if (error) {
-            console.log('Erro ao enviar os dados:', error);
-            return res.status(500).json({ error: "Erro ao salvar no banco de dados" });
-        }
-        res.redirect('/');
-        console.log('Dados enviados com sucesso!');
-    });
+    try {
+        // Obtém os nomes dos arquivos
+        const image = req.files["image"][0].filename;
+        const main_image = req.files["main_image"][0].filename;
+        const secondarys_images = req.files["secondarys_image"].map(file => file.filename).join(',');
+
+        // Insere os dados no banco de dados
+        const querySend = 'INSERT INTO news (title, content, image, main_image, main_title, main_content, secondary_images) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        data.online.query(querySend, [title, content, image, main_image, main_title, main_content, secondarys_images], (error, results) => {
+            if (error) {
+                console.error('Erro ao enviar os dados:', error);
+                return res.status(500).json({ error: "Erro ao salvar no banco de dados" });
+            }
+            res.redirect('/');
+            console.log('Dados enviados com sucesso!');
+        });
+    } catch (error) {
+        console.error('Erro inesperado:', error);
+        res.status(500).json({ error: "Erro inesperado ao processar a solicitação" });
+    }
 });
 
 app.listen(3000, (error) => {

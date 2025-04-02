@@ -42,6 +42,7 @@ height: 65px;
 display: flex;
 flex-direction: column;
 align-items: center;
+padding-top: 1rem;
 justify-content: flex-start;
 }
 .form_title {
@@ -81,6 +82,7 @@ margin-bottom: 1rem;
 textarea {
 height: 192px;
 border: none;
+margin-bottom: 1rem;
 }
 input[type="text"] {
 padding: 0.5rem;
